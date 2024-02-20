@@ -1,28 +1,28 @@
 package main
 
 import (
-	"math/rand"
-	"slices"
 	"fmt"
+	"math/rand"
+	//"slices"
 )
 
 func main() {
-	var daysOfThroughput int // daysToForecast int
-	//var tempTotal, tempRolls int
-	var minThroughputPerDay, maxThroughputPerDay int
+	// var daysOfThroughput, daysToForecast int
+	// var tempTotal, tempRolls int
+	// var minThroughputPerDay, maxThroughputPerDay int
 
-	daysOfThroughput = 14
-	minThroughputPerDay = 0
-	maxThroughputPerDay = 4
-	randomThroughputRange := make([]int, daysOfThrougput)
+	var daysOfThroughput = 14
+	var minThroughputPerDay = 0
+	var maxThroughputPerDay = 4
+	randomThroughputRange := make([]int, daysOfThroughput)
 
 	for i := 0; i < daysOfThroughput; i++ {
-		randomThroughputRange[i] = rand.Intn(maxThrougputPerDay - minThroughputPerDay) + minThrougputPerDay
+		randomThroughputRange[i] = rand.Intn((maxThroughputPerDay+1)-minThroughputPerDay) + minThroughputPerDay
 	}
 
 	fmt.Println("Throughput for each day is:")
 
 	for i, n := range randomThroughputRange {
-		fmt.Println("Day", i, ":", n)
+		fmt.Println("Day", i+1, ":", n)
 	}
 }
