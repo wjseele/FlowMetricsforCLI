@@ -1,12 +1,12 @@
-package main
+package fmlib
 
 import (
-	"fmt"
+	//	"fmt"
 	"math/rand"
 	//"slices"
 )
 
-func main() {
+func DataGenerator() []int {
 	// var daysOfThroughput, daysToForecast int
 	// var tempTotal, tempRolls int
 	// var minThroughputPerDay, maxThroughputPerDay int
@@ -20,9 +20,11 @@ func main() {
 		randomThroughputRange[i] = rand.Intn((maxThroughputPerDay+1)-minThroughputPerDay) + minThroughputPerDay
 	}
 
-	fmt.Println("Throughput for each day is:")
+	return randomThroughputRange
 
-	for i, n := range randomThroughputRange {
-		fmt.Println("Day", i+1, ":", n)
-	}
+	//fmt.Println("Throughput for each day is:")
+
+	//for i, n := range randomThroughputRange {
+	//	fmt.Println("Day", i+1, ":", n)
+	//}
 }
