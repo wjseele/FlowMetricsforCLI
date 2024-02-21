@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/wjseele/FlowMetricsforCLI/lib"
+	"github.com/wjseele/FlowMetricsforCLI/fmlib"
 )
 
 func main() {
