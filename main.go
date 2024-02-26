@@ -27,4 +27,13 @@ func main() {
 	for i, n := range monteCarloSlice {
 		fmt.Println("Amount of", i, ":", n)
 	}
+
+	fmt.Println("Now let's see how much we could get done.")
+
+	var project50, project75, project85, project95, howManyMonteCarloSlice = fmlib.HowMany(daysToForecast, randomThroughputRange)
+
+	fmt.Println("There's a 50% chance of delivering at least", howManyMonteCarloSlice[project50], "items.")
+	fmt.Println("There's a 75% chance of delivering at least", howManyMonteCarloSlice[project75], "items.")
+	fmt.Println("There's a 85% chance of delivering at least", howManyMonteCarloSlice[project85], "items.")
+	fmt.Println("There's a 95% chance of delivering at least", howManyMonteCarloSlice[project95], "items.")
 }
