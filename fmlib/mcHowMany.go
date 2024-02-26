@@ -5,7 +5,7 @@ func HowMany(daysToForecast int, throughputRange []int) (int, int, int, int, []i
 	var monteCarloSlice = MonteCarlo(daysToForecast, throughputRange)
 
 	total := 10000
-	for i := len(monteCarloSlice); i >= 0; i-- {
+	for i := 0; i < len(monteCarloSlice); i++ {
 		total -= monteCarloSlice[i]
 		if total >= 5000 {
 			project50 = i
