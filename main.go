@@ -25,7 +25,9 @@ func main() {
 
 	fmt.Println("Our forecast is:")
 	for i, n := range monteCarloSlice {
-		fmt.Println("Amount of", i, ":", n)
+		if n != 0 {
+			fmt.Println("Amount of", i, ":", n)
+		}
 	}
 
 	fmt.Println("Now let's see how much we could get done.")
@@ -43,7 +45,9 @@ func main() {
 
 	fmt.Println("Our forecast is:")
 	for i, n := range monteCarloHLSlice {
-		fmt.Println("It took", i, "days in", n, "cases.")
+		if n != 0 {
+			fmt.Println("It took", i, "days in", n, "cases.")
+		}
 	}
 
 	fmt.Println("Now let's see how many days we should expect.")
