@@ -51,4 +51,14 @@ func main() {
 	fmt.Println("There's a 75% chance to deliver", desiredAmount, "in", howlong75, "days.")
 	fmt.Println("There's a 85% chance to deliver", desiredAmount, "in", howlong85, "days.")
 	fmt.Println("There's a 95% chance to deliver", desiredAmount, "in", howlong95, "days.")
+
+	fmt.Println("Now let's calculate the SLE's for this range of throughputs.")
+
+	var sle50, sle75, sle85, sle95 = fmlib.ServiceLevelExpectation(randomThroughputRange)
+
+	fmt.Println("In this range, we historically delivered...")
+	fmt.Println("50 % of items in", sle50, "days or less.")
+	fmt.Println("75 % of items in", sle75, "days or less.")
+	fmt.Println("85 % of items in", sle85, "days or less.")
+	fmt.Println("95 % of items in", sle95, "days or less.")
 }
