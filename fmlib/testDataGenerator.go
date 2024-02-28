@@ -4,15 +4,12 @@ import (
 	"math/rand"
 )
 
-func DataGenerator() []int {
-	var daysOfThroughput = 14
-	var minThroughputPerDay = 0
-	var maxThroughputPerDay = 4
-	randomThroughputRange := make([]int, daysOfThroughput)
+func DataGenerator(datarange, min, max int) []int {
+	randomRange := make([]int, datarange)
 
-	for i := 0; i < daysOfThroughput; i++ {
-		randomThroughputRange[i] = rand.Intn((maxThroughputPerDay+1)-minThroughputPerDay) + minThroughputPerDay
+	for i := 0; i < datarange; i++ {
+		randomRange[i] = rand.Intn((max+1)-min) + min
 	}
 
-	return randomThroughputRange
+	return randomRange
 }
