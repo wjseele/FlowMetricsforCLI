@@ -9,7 +9,7 @@ func main() {
 	fmt.Println("Welcome to Flow Metrics for CLI.")
 	fmt.Println("Let's try a test.")
 
-	var randomThroughputRange = fmlib.DataGenerator(14, 0, 8)
+	var randomThroughputRange, randomCycletimeRange = fmlib.DataGenerator(14, 0, 8)
 
 	fmt.Println("Throughput for each day is:")
 	for i, n := range randomThroughputRange {
@@ -58,13 +58,6 @@ func main() {
 
 	fmt.Println("Now let's calculate the SLE's for this range of throughputs.")
 
-	var totalThroughput int
-
-	for _, n := range randomThroughputRange {
-		totalThroughput += randomThroughputRange[n]
-	}
-
-	var randomCycletimeRange = fmlib.DataGenerator(totalThroughput, 1, len(randomThroughputRange))
 	var sle50, sle75, sle85, sle95 = fmlib.ServiceLevelExpectation(randomCycletimeRange)
 
 	fmt.Println("In this range, we historically delivered...")
