@@ -5,10 +5,10 @@ It's a bunch of flow metrics tools for command line enthousiasts
 - Test data generation
 - Monte Carlo: How Much
 - Monte Carlo: How Many
-
-## What's next?
 - Service Level Expectations
 - Custom test data generation
+
+## What's next?
 - Setting custom variables for the forecasts
 - Data parsing
 - Custom throughput picking algorithm selection for the MC simulations
