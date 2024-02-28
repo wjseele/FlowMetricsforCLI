@@ -1,6 +1,7 @@
 package fmlib
 
 import (
+	"fmt"
 	"math/rand"
 	"slices"
 )
@@ -39,7 +40,7 @@ func howLong(desiredAmount int, throughputRange []int) []int {
 		minimumDelivery = 1
 	}
 
-	daysToForecast = (desiredAmount / minimumDelivery) * counts(throughputRange, 0)
+	daysToForecast = (desiredAmount / minimumDelivery) * counts(throughputRange, slices.Min(throughputRange))
 
 	var monteCarloHLSlice = monteCarloHL(desiredAmount, daysToForecast, throughputRange)
 
@@ -72,10 +73,14 @@ func monteCarloHL(desiredAmount int, daysToForecast int, throughputRange []int) 
 func monteCarloSingleCountdown(desiredAmount int, daysToForecast int, throughputRange []int) int {
 	days := 0
 
-	for desiredAmount > 0 {
+	for desiredAmount > 0 && days < daysToForecast {
 		desiredAmount -= throughputRange[rand.Intn(len(throughputRange))]
 		days++
 	}
 
+	if desiredAmount > 0 {
+		fmt.Println("Wasn't able to deliver all items within", daysToForecast)
+		fmt.Println(desiredAmount, "items left. Please run again with more time.")
+	}
 	return days
 }

@@ -1,7 +1,6 @@
 package fmlib
 
 import (
-	"fmt"
 	"math"
 	"slices"
 )
@@ -20,10 +19,6 @@ func ServiceLevelExpectation(throughputRange []int) (int, int, int, int) {
 func sle(percent float64, throughputRange []int) int {
 	var timeOrLess int
 	var spotInRange int
-
-	fmt.Println(float64(len(throughputRange) - 1))
-	fmt.Println(percent / 100)
-	fmt.Println(math.Round(((float64(len(throughputRange) - 1)) * (percent / 100))))
 
 	spotInRange = int(math.Round(((float64(len(throughputRange) - 1)) * (percent / 100))))
 
