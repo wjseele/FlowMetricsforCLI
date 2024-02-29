@@ -10,4 +10,5 @@ func main() {
 	fmt.Println("There's currently only a demo.")
 
 	fmlib.Demo()
+	fmlib.Parser()
 }
