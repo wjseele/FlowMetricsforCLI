@@ -19,3 +19,13 @@ func Parser() {
 	fmt.Println(wobbles.name)
 	fmt.Println(wobbles.finished)
 }
+
+func newParser() map[string]map[string]string {
+	//Create a 2 dimensional map containing item history
+	//Read each line from the database into a map
+	//ID - Name - StateDate - BlockedDays - Tags
+
+	flowMetrics := make(map[string]map[string]string)
+
+	return flowMetrics
+}
