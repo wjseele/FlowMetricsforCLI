@@ -1,6 +1,9 @@
 package fmlib
 
-import "time"
+import (
+	"math"
+	"time"
+)
 
 type WorkState struct {
 	stateName string
@@ -26,5 +29,10 @@ func (wi WorkItem) States() []WorkState {
 }
 
 func (wi WorkItem) CycleTime() int {
-	return 1
+	first := wi.states[0].date
+	last := wi.states[len(wi.states)-1].date
+
+	diff := last.Sub(first).Abs()
+
+	return int(math.Ceil(diff.Hours() / 24))
 }
