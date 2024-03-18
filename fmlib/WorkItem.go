@@ -44,13 +44,6 @@ func (wi WorkItem) findWorkState(stateName string) int {
 	return -1
 }
 
-func (wi WorkItem) CycleTimeMax() int {
-	first := wi.states[0].date
-	last := wi.states[len(wi.states)-1].date
-
-	return cycleTime(first, last)
-}
-
 func truncateToDay(t time.Time) time.Time {
 	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 }
@@ -74,4 +67,11 @@ func (wi WorkItem) CycleTime(stateOne string, stateTwo string) int {
 	second := wi.retrieveWorkState(stateTwo)
 
 	return cycleTime(first.date, second.date)
+}
+
+func (wi WorkItem) CycleTimeMax() int {
+	first := wi.states[0].date
+	last := wi.states[len(wi.states)-1].date
+
+	return cycleTime(first, last)
 }

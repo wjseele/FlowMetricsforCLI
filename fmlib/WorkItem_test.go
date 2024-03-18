@@ -113,3 +113,54 @@ func TestCycleTime_BetweenTwoStates_ReturnsDaysDifference(t *testing.T) {
 		t.Errorf("Cycle time mismatch. Expected: %d; Actual: %d", expectedCycleTime, cycleTime)
 	}
 }
+
+func TestFindWorkState_StateExists_RetrievesIndex(t *testing.T) {
+	wsOne := WorkState{"state1", time.Now()}
+	wsTwo := WorkState{"state2", time.Now()}
+	wsThree := WorkState{"state3", time.Now()}
+	wsFour := WorkState{"state4", time.Now()}
+	wsFive := WorkState{"state5", time.Now()}
+
+	wi := WorkItem{1, "item1", []WorkState{wsOne, wsTwo, wsThree, wsFour, wsFive}}
+
+	expected := 3 // Zero-based
+	actual := wi.findWorkState("state4")
+
+	if expected != actual {
+		t.Errorf("Incorrect index identified. Expected: %d; Actual: %d", expected, actual)
+	}
+}
+
+func TestFindWorkState_StateIsDuplicated_RetrievesFirstInstanceIndex(t *testing.T) {
+	wsOne := WorkState{"state1", time.Now()}
+	wsTwo := WorkState{"state2", time.Now()}
+	wsThree := WorkState{"state5", time.Now()}
+	wsFour := WorkState{"state4", time.Now()}
+	wsFive := WorkState{"state5", time.Now()}
+
+	wi := WorkItem{1, "item1", []WorkState{wsOne, wsTwo, wsThree, wsFour, wsFive}}
+
+	expected := 2 // Zero-based
+	actual := wi.findWorkState("state5")
+
+	if expected != actual {
+		t.Errorf("Incorrect index identified. Expected: %d; Actual: %d", expected, actual)
+	}
+}
+
+func TestFindWorkState_StateDoesNotExist_ReturnsNegativeOne(t *testing.T) {
+	wsOne := WorkState{"state1", time.Now()}
+	wsTwo := WorkState{"state2", time.Now()}
+	wsThree := WorkState{"state3", time.Now()}
+	wsFour := WorkState{"state4", time.Now()}
+	wsFive := WorkState{"state5", time.Now()}
+
+	wi := WorkItem{1, "item1", []WorkState{wsOne, wsTwo, wsThree, wsFour, wsFive}}
+
+	expected := -1 // Zero-based
+	actual := wi.findWorkState("DNE")
+
+	if expected != actual {
+		t.Errorf("Incorrect index identified. Expected: %d; Actual: %d", expected, actual)
+	}
+}
