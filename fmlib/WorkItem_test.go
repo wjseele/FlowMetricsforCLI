@@ -5,6 +5,17 @@ import (
 	"time"
 )
 
+func TestCycleTimeMax_OneValue_ReturnsZero(t *testing.T) {
+	day := time.Date(2030, time.May, 10, 0, 0, 0, 0, time.UTC)
+	item := WorkItem{1, "item1", []WorkState{{"start", day}}}
+
+	cycleTime := item.CycleTimeMax()
+
+	if cycleTime != 0 {
+		t.Errorf("Cycle time was not equal to zero for single state item. Expected: 0; Actual %d", cycleTime)
+	}
+}
+
 func TestCycleTimeMax_TwoValuesAreSame_ReturnsZero(t *testing.T) {
 	day := time.Date(2030, time.May, 10, 0, 0, 0, 0, time.UTC)
 	item := WorkItem{1, "item1", []WorkState{{"start", day}, {"stop", day}}}
