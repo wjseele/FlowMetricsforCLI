@@ -5,15 +5,10 @@ import (
 	"time"
 )
 
-type WorkState struct {
-	stateName string
-	date      time.Time
-}
-
 type WorkItem struct {
-	id     int
-	name   string
-	states []WorkState
+	id      int
+	name    string
+	history []WorkItemState
 }
 
 func (wi WorkItem) Id() int {
@@ -24,18 +19,18 @@ func (wi WorkItem) Name() string {
 	return wi.name
 }
 
-func (wi WorkItem) States() []WorkState {
-	return wi.states
+func (wi WorkItem) History() []WorkItemState {
+	return wi.history
 }
 
-func (wi WorkItem) retrieveWorkState(stateName string) WorkState {
+func (wi WorkItem) retrieveWorkState(stateName string) WorkItemState {
 	index := wi.findWorkState(stateName)
 
-	return wi.states[index]
+	return wi.history[index]
 }
 
 func (wi WorkItem) findWorkState(stateName string) int {
-	for i, item := range wi.states {
+	for i, item := range wi.history {
 		if item.stateName == stateName {
 			return i
 		}
@@ -70,8 +65,8 @@ func (wi WorkItem) CycleTime(stateOne string, stateTwo string) int {
 }
 
 func (wi WorkItem) CycleTimeMax() int {
-	first := wi.states[0].date
-	last := wi.states[len(wi.states)-1].date
+	first := wi.history[0].date
+	last := wi.history[len(wi.history)-1].date
 
 	return cycleTime(first, last)
 }
