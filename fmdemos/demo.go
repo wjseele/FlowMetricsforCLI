@@ -1,10 +1,12 @@
-package fmlib
+package fmdemos
 
 import (
 	"fmt"
+
+	"github.com/wjseele/FlowMetricsforCLI/fmlib"
 )
 
-func Demo() {
+func SimpleDemo() {
 	var days, min, max int
 
 	fmt.Println("Enter the values you wish to use.")
@@ -53,7 +55,7 @@ func howMuchDemo(throughputRange []int) {
 	fmt.Println("How many days do you want to forecast?")
 	fmt.Scanln(&daysToForecast)
 
-	var howmuch50, howmuch75, howmuch85, howmuch95, monteCarloSlice = HowMany(daysToForecast, throughputRange)
+	var howmuch50, howmuch75, howmuch85, howmuch95, monteCarloSlice = fmlib.HowMany(daysToForecast, throughputRange)
 
 	fmt.Println("Our forecast is:")
 	for i, n := range monteCarloSlice {
@@ -76,7 +78,7 @@ func howLongDemo(throughputRange []int) {
 	fmt.Println("How many items do you want to deliver?")
 	fmt.Scanln(&desiredAmount)
 
-	var howlong50, howlong75, howlong85, howlong95, monteCarloHLSlice = HowLong(desiredAmount, throughputRange)
+	var howlong50, howlong75, howlong85, howlong95, monteCarloHLSlice = fmlib.HowLong(desiredAmount, throughputRange)
 
 	fmt.Println("Our forecast is:")
 	for i, n := range monteCarloHLSlice {
@@ -96,7 +98,7 @@ func sleDemo(cycletimeRange []int) {
 
 	fmt.Println("Let's calculate the SLE's for this range of throughputs.")
 
-	var sle50, sle75, sle85, sle95 = ServiceLevelExpectation(cycletimeRange)
+	var sle50, sle75, sle85, sle95 = fmlib.ServiceLevelExpectation(cycletimeRange)
 
 	fmt.Println("In this range, we historically delivered...")
 	fmt.Println("50 % of items in", sle50, "days or less.")

@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/wjseele/FlowMetricsforCLI/fmdemos"
 	"github.com/wjseele/FlowMetricsforCLI/fmlib"
 )
 
@@ -21,7 +23,7 @@ func main() {
 		}
 
 		if selection == 1 {
-			fmlib.Demo()
+			fmdemos.SimpleDemo()
 		}
 		if selection == 2 {
 			fmlib.Parser()

@@ -1,4 +1,4 @@
-package fmlib
+package fmdemos
 
 import (
 	"math/rand"
