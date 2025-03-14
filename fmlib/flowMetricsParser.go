@@ -1,31 +1,93 @@
 package fmlib
 
-import "fmt"
+import (
+	"encoding/csv"
+	"fmt"
+	"log"
+	"os"
+	"time"
+)
 
-type item struct {
-	ID       int64
-	name     string
-	created  int
-	state1   int
-	state2   int
-	state3   int
-	finished int
-	blocked  bool
+// WorkItem represents a single work item with dynamic state transitions
+type WorkItem struct {
+	ID            string
+	Name          string
+	CreatedDate   time.Time
+	StartedDate   time.Time
+	FinishedDate  time.Time
+	StateChanges  map[string]time.Time // Key: State Name, Value: Date Entered
+	CycleTimeDays float64
 }
 
-func Parser() {
-	wobbles := item{1, "Wobbles", 1, 2, 3, 4, 5, true}
-	fmt.Println(wobbles)
-	fmt.Println(wobbles.name)
-	fmt.Println(wobbles.finished)
+// ReadCSV reads a CSV file and returns a slice of WorkItems
+func ReadCSV(filename string) ([]WorkItem, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		return nil, err
+	}
+
+	if len(records) < 2 {
+		return nil, fmt.Errorf("CSV file must have at least a header and one row of data")
+	}
+
+	// Identify columns dynamically
+	headers := records[0]
+	workItems := []WorkItem{}
+
+	for _, row := range records[1:] {
+		item := WorkItem{
+			ID:           row[0],
+			Name:         row[1],
+			StateChanges: make(map[string]time.Time),
+		}
+
+		// Convert dates
+		for i, col := range headers {
+			if date, err := parseDate(row[i]); err == nil {
+				switch col {
+				case "CreatedDate":
+					item.CreatedDate = date
+				case "StartedDate":
+					item.StartedDate = date
+				case "FinishedDate":
+					item.FinishedDate = date
+				default:
+					item.StateChanges[col] = date
+				}
+			}
+		}
+
+		// Calculate Cycle Time (if FinishedDate exists)
+		if !item.CreatedDate.IsZero() && !item.FinishedDate.IsZero() {
+			item.CycleTimeDays = item.FinishedDate.Sub(item.StartedDate).Hours() / 24
+			if item.CycleTimeDays == 0 {
+				item.CycleTimeDays = 1 //Cycle time for a completed item is always no less than 1 day
+			}
+		}
+
+		workItems = append(workItems, item)
+	}
+
+	return workItems, nil
 }
 
-func newParser() map[string]map[string]string {
-	//Create a 2 dimensional map containing item history
-	//Read each line from the database into a map
-	//ID - Name - StateDate - BlockedDays - Tags
+// parseDate converts string to time.Time
+func parseDate(dateStr string) (time.Time, error) {
+	return time.Parse("2006-01-02", dateStr) // Adjust format as per CSV
+}
 
-	flowMetrics := make(map[string]map[string]string)
+func Parser(fileName string) []WorkItem {
+	WorkItems, err := ReadCSV(fileName)
+	if err != nil {
+		log.Fatal("Failed to read CSV: %v", err)
+	}
 
-	return flowMetrics
+	return WorkItems
 }
